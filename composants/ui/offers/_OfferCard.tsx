@@ -4,10 +4,18 @@ import { OfferDocument } from "@/prismicio-types";
 import { isFilled } from "@prismicio/client";
 import type * as prismic from "@prismicio/client";
 import Link from "next/link";
+import { useSavedOffersStore } from "@/store/savedOffersStore";
+import { useEffect, useState } from "react";
 
 type FilledTagRelationship = prismic.FilledContentRelationshipField<"tag", string, { title: prismic.KeyTextField }>;
 
 export default function OfferCard({ offer }: { offer: OfferDocument }) {
+    const toggleSave = useSavedOffersStore((s) => s.toggleSave);
+    const savedOfferIds = useSavedOffersStore((s) => s.savedOfferIds);
+    const [hydrated, setHydrated] = useState(false);
+    useEffect(() => setHydrated(true), []);
+    const saved = hydrated && savedOfferIds.includes(offer.uid);
+
     const date = offer.first_publication_date
         ? new Date(offer.first_publication_date).toLocaleDateString("fr-FR")
         : null;
@@ -31,7 +39,18 @@ export default function OfferCard({ offer }: { offer: OfferDocument }) {
 
             <div className="flex items-start justify-between mb-3">
                 <h3 className="text-base font-bold text-gray-900">{offer.data.title}</h3>
-                <span className="material-symbols-outlined">bookmark</span>
+                <button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        toggleSave(offer.uid);
+                    }}
+                    className="relative z-20 text-blue-500 hover:text-blue-700 transition-colors"
+                    aria-label={saved ? "Retirer des enregistrements" : "Enregistrer l'offre"}
+                >
+                    <span className="material-symbols-outlined" style={{ fontVariationSettings: saved ? "'FILL' 1" : "'FILL' 0" }}>
+                        bookmark
+                    </span>
+                </button>
             </div>
 
             {date && (

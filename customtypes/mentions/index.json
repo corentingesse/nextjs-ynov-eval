@@ -2,7 +2,7 @@
   "format": "page",
   "id": "mentions",
   "label": "Mentions",
-  "repeatable": true,
+  "repeatable": false,
   "status": true,
   "json": {
     "Main": {

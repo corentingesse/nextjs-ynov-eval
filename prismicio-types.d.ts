@@ -216,7 +216,7 @@ interface MentionsDocumentData {
  * Mentions document from Prismic
  *
  * - **API ID**: `mentions`
- * - **Repeatable**: `true`
+ * - **Repeatable**: `false`
  * - **Documentation**: https://prismic.io/docs/content-modeling
  *
  * @typeParam Lang - Language API ID of the document.

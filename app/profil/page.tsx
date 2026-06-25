@@ -1,6 +1,7 @@
 import TitleComponent from "@/composants/ui/Title";
 import { SliceZone } from "@prismicio/react";
-import ListOffers from "@/composants/ui/offers/ListOffers";
+import SavedOffersList from "@/composants/ui/offers/SavedOffersList";
+import AppliedOffersList from "@/composants/ui/offers/AppliedOffersList";
 import { getPagesByType, getPageSingleData } from "@/libs/PageData";
 import { asImageSrc } from "@prismicio/client";
 import type { Metadata } from "next";
@@ -19,40 +20,30 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function Offers() {
+export default async function Profil() {
   const pageData = await getPageSingleData("profil");
-  const offers = await getPagesByType("offer", { fetchLinks: ["tag.title"] });
+  const allOffers = await getPagesByType("offer", { fetchLinks: ["tag.title"] });
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-medium font-sans dark:bg-black">
       <main className="w-full bg-medium dark:bg-black">
         <div className="mx-10 md:mx-40 my-10 flex flex-col items-center justify-center gap-4 p-4 sm:items-start">
-          <TitleComponent tag="h1" >
+          <TitleComponent tag="h1">
             {pageData?.data.title}
           </TitleComponent>
 
           <h2 className="font-2xl text-blue-light">Offres enregistrées</h2>
-          <ListOffers offers={offers} />
+          <SavedOffersList allOffers={allOffers} />
+
+          <h2 className="font-2xl text-blue-light">Historique des candidatures</h2>
+          <AppliedOffersList allOffers={allOffers} />
 
           <div className="my-8">
             <SliceZone
               slices={pageData?.data.slices}
               components={{
                 title: Title,
-                paragraph: Paragraph
-              }}
-            />
-          </div>
-
-          <h2 className="font-2xl text-blue-light">Historiques des candidatures</h2>
-          <ListOffers offers={offers} />
-
-          <div className="my-8">
-            <SliceZone
-              slices={pageData?.data.slices}
-              components={{
-                title: Title,
-                paragraph: Paragraph
+                paragraph: Paragraph,
               }}
             />
           </div>
