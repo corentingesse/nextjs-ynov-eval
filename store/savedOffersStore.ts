@@ -1,42 +1,34 @@
+import { OfferDocument } from "@/prismicio-types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface SavedOffersStore {
-  _hasHydrated: boolean;
-  setHasHydrated: (value: boolean) => void;
-  savedOfferIds: string[];
-  appliedOfferIds: string[];
-  toggleSave: (uid: string) => void;
-  addApplied: (uid: string) => void;
-}
+type SavedOffersState = {
+  savedOffers: OfferDocument[];
+  appliedOffers: OfferDocument[];
+  toggleSave: (offer: OfferDocument) => void;
+  addApplied: (offer: OfferDocument) => void;
+};
 
-export const useSavedOffersStore = create<SavedOffersStore>()(
+export const useSavedOffersStore = create<SavedOffersState>()(
   persist(
-    (set, get) => ({
-      _hasHydrated: false,
-      setHasHydrated: (value) => set({ _hasHydrated: value }),
-      savedOfferIds: [],
-      appliedOfferIds: [],
-      toggleSave: (uid) => {
-        const ids = get().savedOfferIds;
-        set({
-          savedOfferIds: ids.includes(uid)
-            ? ids.filter((id) => id !== uid)
-            : [...ids, uid],
-        });
-      },
-      addApplied: (uid) => {
-        const ids = get().appliedOfferIds;
-        if (!ids.includes(uid)) {
-          set({ appliedOfferIds: [...ids, uid] });
-        }
-      },
+    (set) => ({
+      savedOffers: [],
+      appliedOffers: [],
+      toggleSave: (offer) =>
+        set((state) => ({
+          savedOffers: state.savedOffers.some((o) => o.uid === offer.uid)
+            ? state.savedOffers.filter((o) => o.uid !== offer.uid)
+            : [...state.savedOffers, offer],
+        })),
+      addApplied: (offer) =>
+        set((state) => ({
+          appliedOffers: state.appliedOffers.some((o) => o.uid === offer.uid)
+            ? state.appliedOffers
+            : [...state.appliedOffers, offer],
+        })),
     }),
     {
       name: "saved-offers",
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true);
-      },
-    }
-  )
+    },
+  ),
 );

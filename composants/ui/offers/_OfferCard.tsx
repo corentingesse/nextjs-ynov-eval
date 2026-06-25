@@ -10,9 +10,8 @@ type FilledTagRelationship = prismic.FilledContentRelationshipField<"tag", strin
 
 export default function OfferCard({ offer }: { offer: OfferDocument }) {
     const toggleSave = useSavedOffersStore((s) => s.toggleSave);
-    const savedOfferIds = useSavedOffersStore((s) => s.savedOfferIds);
-    const hasHydrated = useSavedOffersStore((s) => s._hasHydrated);
-    const saved = hasHydrated && savedOfferIds.includes(offer.uid);
+    const savedOffers = useSavedOffersStore((s) => s.savedOffers);
+    const saved = savedOffers.some((o) => o.uid === offer.uid);
 
     const date = offer.first_publication_date
         ? new Date(offer.first_publication_date).toLocaleDateString("fr-FR")
@@ -40,7 +39,7 @@ export default function OfferCard({ offer }: { offer: OfferDocument }) {
                 <button
                     onClick={(e) => {
                         e.preventDefault();
-                        toggleSave(offer.uid);
+                        toggleSave(offer);
                     }}
                     className="relative z-20 text-blue-500 hover:text-blue-700 transition-colors"
                     aria-label={saved ? "Retirer des enregistrements" : "Enregistrer l'offre"}

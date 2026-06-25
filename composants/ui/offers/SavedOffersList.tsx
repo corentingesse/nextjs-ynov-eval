@@ -1,18 +1,13 @@
 "use client";
 
-import { OfferDocument } from "@/prismicio-types";
 import { useSavedOffersStore } from "@/store/savedOffersStore";
 import OffersGrid from "./_OffersGrid";
 
-export default function SavedOffersList({ allOffers }: { allOffers: OfferDocument[] }) {
-    const hasHydrated = useSavedOffersStore((s) => s._hasHydrated);
-    const savedOfferIds = useSavedOffersStore((s) => s.savedOfferIds);
+export default function SavedOffersList() {
+    const savedOffers = useSavedOffersStore((s) => s.savedOffers);
+    const visibleOffers = savedOffers.filter((o) => o.data.available);
 
-    if (!hasHydrated) return null;
-
-    const savedOffers = allOffers.filter((o) => savedOfferIds.includes(o.uid));
-
-    if (savedOffers.length === 0) {
+    if (visibleOffers.length === 0) {
         return (
             <p className="text-sm text-gray-500 italic">
                 Aucune offre enregistrée pour le moment.
@@ -20,5 +15,5 @@ export default function SavedOffersList({ allOffers }: { allOffers: OfferDocumen
         );
     }
 
-    return <OffersGrid offers={savedOffers} />;
+    return <OffersGrid offers={visibleOffers} />;
 }

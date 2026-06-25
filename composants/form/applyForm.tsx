@@ -1,22 +1,23 @@
 "use client";
 
 import applyFormAction from "@/actions/apply";
+import { OfferDocument } from "@/prismicio-types";
 import { useSavedOffersStore } from "@/store/savedOffersStore";
 import { useRef, useTransition } from "react";
 
-export default function ContactForm({ offerUid }: { offerUid: string }) {
+export default function ContactForm({ offer }: { offer: OfferDocument }) {
   const [isPending, startTransition] = useTransition();
   const addApplied = useSavedOffersStore((s) => s.addApplied);
-  const appliedOfferIds = useSavedOffersStore((s) => s.appliedOfferIds);
+  const appliedOffers = useSavedOffersStore((s) => s.appliedOffers);
   const formRef = useRef<HTMLFormElement>(null);
-  const alreadyApplied = appliedOfferIds.includes(offerUid);
+  const alreadyApplied = appliedOffers.some((o) => o.uid === offer.uid);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     startTransition(async () => {
       await applyFormAction(formData);
-      addApplied(offerUid);
+      addApplied(offer);
       formRef.current?.reset();
     });
   };

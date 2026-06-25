@@ -103,7 +103,7 @@ export default async function OfferPage({ params }: Props) {
                 />
               </div>
               <div className="w-full mt-8">
-                <ApplyForm offerUid={offer.uid} />
+                <ApplyForm offer={offer} />
               </div>
             </div>
           </main>

@@ -2,7 +2,7 @@ import TitleComponent from "@/composants/ui/Title";
 import { SliceZone } from "@prismicio/react";
 import SavedOffersList from "@/composants/ui/offers/SavedOffersList";
 import AppliedOffersList from "@/composants/ui/offers/AppliedOffersList";
-import { getPagesByType, getPageSingleData } from "@/libs/PageData";
+import { getPageSingleData } from "@/libs/PageData";
 import { asImageSrc } from "@prismicio/client";
 import type { Metadata } from "next";
 import Title from "@/slices/Title";
@@ -22,8 +22,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Profil() {
   const pageData = await getPageSingleData("profil");
-  const allOffers = await getPagesByType("offer", { fetchLinks: ["tag.title"] });
-
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-medium font-sans dark:bg-black">
       <main className="w-full bg-medium dark:bg-black">
@@ -34,12 +32,12 @@ export default async function Profil() {
 
           <div className="w-full my-5">
             <h2 className="text-blue-light text-2xl font-semibold">Offres enregistrées</h2>
-            <SavedOffersList allOffers={allOffers} />
+            <SavedOffersList />
           </div>
 
           <div className="w-full my-5">
             <h2 className="text-blue-light text-2xl font-semibold">Historique des candidatures</h2>
-            <AppliedOffersList allOffers={allOffers} />
+            <AppliedOffersList />
           </div>
 
           <div className="my-8">
