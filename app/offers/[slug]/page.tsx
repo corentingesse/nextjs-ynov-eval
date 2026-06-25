@@ -71,6 +71,16 @@ export default async function OfferPage({ params }: Props) {
                   Voir toutes les offres
                 </Link>
               </div>
+              <span
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium ${
+                  offer.data.available
+                    ? "bg-green-600 text-white"
+                    : "bg-red-600 text-white"
+                }`}
+              >
+                <span className="w-2 h-2 rounded-full inline-block bg-current" />
+                {offer.data.available ? "Disponible" : "Non disponible"}
+              </span>
               <TitleComponent tag="h1">
                 {offer.data.title}
               </TitleComponent>
