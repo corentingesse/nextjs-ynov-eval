@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface SavedOffersStore {
+  _hasHydrated: boolean;
+  setHasHydrated: (value: boolean) => void;
   savedOfferIds: string[];
   appliedOfferIds: string[];
   toggleSave: (uid: string) => void;
@@ -11,6 +13,8 @@ interface SavedOffersStore {
 export const useSavedOffersStore = create<SavedOffersStore>()(
   persist(
     (set, get) => ({
+      _hasHydrated: false,
+      setHasHydrated: (value) => set({ _hasHydrated: value }),
       savedOfferIds: [],
       appliedOfferIds: [],
       toggleSave: (uid) => {
@@ -28,6 +32,11 @@ export const useSavedOffersStore = create<SavedOffersStore>()(
         }
       },
     }),
-    { name: "saved-offers" }
+    {
+      name: "saved-offers",
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
+    }
   )
 );

@@ -32,11 +32,15 @@ export default async function Profil() {
             {pageData?.data.title}
           </TitleComponent>
 
-          <h2 className="font-2xl text-blue-light">Offres enregistrées</h2>
-          <SavedOffersList allOffers={allOffers} />
+          <div className="w-full my-5">
+            <h2 className="text-blue-light text-2xl font-semibold">Offres enregistrées</h2>
+            <SavedOffersList allOffers={allOffers} />
+          </div>
 
-          <h2 className="font-2xl text-blue-light">Historique des candidatures</h2>
-          <AppliedOffersList allOffers={allOffers} />
+          <div className="w-full my-5">
+            <h2 className="text-blue-light text-2xl font-semibold">Historique des candidatures</h2>
+            <AppliedOffersList allOffers={allOffers} />
+          </div>
 
           <div className="my-8">
             <SliceZone

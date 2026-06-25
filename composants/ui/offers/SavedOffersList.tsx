@@ -3,14 +3,12 @@
 import { OfferDocument } from "@/prismicio-types";
 import { useSavedOffersStore } from "@/store/savedOffersStore";
 import OffersGrid from "./_OffersGrid";
-import { useEffect, useState } from "react";
 
 export default function SavedOffersList({ allOffers }: { allOffers: OfferDocument[] }) {
+    const hasHydrated = useSavedOffersStore((s) => s._hasHydrated);
     const savedOfferIds = useSavedOffersStore((s) => s.savedOfferIds);
-    const [hydrated, setHydrated] = useState(false);
-    useEffect(() => setHydrated(true), []);
 
-    if (!hydrated) return null;
+    if (!hasHydrated) return null;
 
     const savedOffers = allOffers.filter((o) => savedOfferIds.includes(o.uid));
 
@@ -22,9 +20,5 @@ export default function SavedOffersList({ allOffers }: { allOffers: OfferDocumen
         );
     }
 
-    return (
-        <div className="w-full my-5">
-            <OffersGrid offers={savedOffers} />
-        </div>
-    );
+    return <OffersGrid offers={savedOffers} />;
 }

@@ -10,8 +10,8 @@ export default async function Footer() {
       <Logo />
       <nav className="mt-8">
         <ul className="flex flex-col gap-2 text-button">
-
-          <li>
+          <li className="text-white hover:underline">
+            <Link href="/mentions">Mentions légales</Link>
           </li>
         </ul>
       </nav>

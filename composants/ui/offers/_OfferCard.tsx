@@ -5,16 +5,14 @@ import { isFilled } from "@prismicio/client";
 import type * as prismic from "@prismicio/client";
 import Link from "next/link";
 import { useSavedOffersStore } from "@/store/savedOffersStore";
-import { useEffect, useState } from "react";
 
 type FilledTagRelationship = prismic.FilledContentRelationshipField<"tag", string, { title: prismic.KeyTextField }>;
 
 export default function OfferCard({ offer }: { offer: OfferDocument }) {
     const toggleSave = useSavedOffersStore((s) => s.toggleSave);
     const savedOfferIds = useSavedOffersStore((s) => s.savedOfferIds);
-    const [hydrated, setHydrated] = useState(false);
-    useEffect(() => setHydrated(true), []);
-    const saved = hydrated && savedOfferIds.includes(offer.uid);
+    const hasHydrated = useSavedOffersStore((s) => s._hasHydrated);
+    const saved = hasHydrated && savedOfferIds.includes(offer.uid);
 
     const date = offer.first_publication_date
         ? new Date(offer.first_publication_date).toLocaleDateString("fr-FR")
