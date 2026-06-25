@@ -3,5 +3,6 @@
 import dynamic from "next/dynamic";
 
 export const components = {
+  paragraph: dynamic(() => import("./Paragraph")),
   title: dynamic(() => import("./Title")),
 };

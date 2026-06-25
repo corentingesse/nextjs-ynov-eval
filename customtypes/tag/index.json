@@ -26,6 +26,9 @@
           "choices": {
             "title": {
               "type": "SharedSlice"
+            },
+            "paragraph": {
+              "type": "SharedSlice"
             }
           }
         }

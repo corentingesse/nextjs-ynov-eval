@@ -1,5 +1,5 @@
 import BannerImage from "@/composants/ui/BannerImage";
-import ListOffers from "@/composants/ui/offers/ListOffers";
+import LatestOffers from "@/composants/ui/offers/LatestOffers";
 import Title from "@/composants/ui/Title";
 import { getPageSingleData, getPagesByType } from "@/libs/PageData";
 import { asImageSrc } from "@prismicio/client";
@@ -30,7 +30,7 @@ export default async function Home() {
           <Title tag="h1">
             {pageData?.data.title}
           </Title>
-          <ListOffers offers={offers} />
+          <LatestOffers offers={offers} />
         </div>
       </main>
     </div>

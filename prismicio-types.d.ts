@@ -69,7 +69,7 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type HomeDocumentDataSlicesSlice = TitleSlice;
+type HomeDocumentDataSlicesSlice = ParagraphSlice | TitleSlice;
 
 /**
  * Content for Home documents
@@ -152,7 +152,7 @@ interface HomeDocumentData {
 export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
-type MentionsDocumentDataSlicesSlice = TitleSlice;
+type MentionsDocumentDataSlicesSlice = ParagraphSlice | TitleSlice;
 
 /**
  * Content for Mentions documents
@@ -228,12 +228,39 @@ export type MentionsDocument<Lang extends string = string> =
     Lang
   >;
 
-type OfferDocumentDataSlicesSlice = TitleSlice;
+/**
+ * Item in *Offer → Tags*
+ */
+export interface OfferDocumentDataTagsItem {
+  /**
+   * Tag field in *Offer → Tags*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.tags[].tag
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  tag: ContentRelationshipFieldWithData<[{ id: "tag"; fields: ["title"] }]>;
+}
+
+type OfferDocumentDataSlicesSlice = ParagraphSlice | TitleSlice;
 
 /**
  * Content for Offer documents
  */
 interface OfferDocumentData {
+  /**
+   * Available field in *Offer*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: offer.available
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  available: prismic.BooleanField;
+
   /**
    * Title field in *Offer*
    *
@@ -255,6 +282,28 @@ interface OfferDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   short_description: prismic.KeyTextField;
+
+  /**
+   * content field in *Offer*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.content
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  content: prismic.RichTextField;
+
+  /**
+   * Tags field in *Offer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.tags[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  tags: prismic.GroupField<Simplify<OfferDocumentDataTagsItem>>;
 
   /**
    * Slice Zone field in *Offer*
@@ -311,7 +360,7 @@ interface OfferDocumentData {
 export type OfferDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<OfferDocumentData>, "offer", Lang>;
 
-type OffersDocumentDataSlicesSlice = TitleSlice;
+type OffersDocumentDataSlicesSlice = ParagraphSlice | TitleSlice;
 
 /**
  * Content for Offers documents
@@ -387,7 +436,7 @@ export type OffersDocument<Lang extends string = string> =
     Lang
   >;
 
-type ProfilDocumentDataSlicesSlice = TitleSlice;
+type ProfilDocumentDataSlicesSlice = ParagraphSlice | TitleSlice;
 
 /**
  * Content for Profil documents
@@ -452,7 +501,7 @@ export type ProfilDocument<Lang extends string = string> =
     Lang
   >;
 
-type TagDocumentDataSlicesSlice = TitleSlice;
+type TagDocumentDataSlicesSlice = TitleSlice | ParagraphSlice;
 
 /**
  * Content for Tag documents
@@ -531,6 +580,61 @@ export type AllDocumentTypes =
   | OffersDocument
   | ProfilDocument
   | TagDocument;
+
+/**
+ * Primary content in *Paragraph → Default → Primary*
+ */
+export interface ParagraphSliceDefaultPrimary {
+  /**
+   * title field in *Paragraph → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: paragraph.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * content field in *Paragraph → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: paragraph.default.primary.content
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  content: prismic.RichTextField;
+}
+
+/**
+ * Default variation for Paragraph Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ParagraphSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ParagraphSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Paragraph*
+ */
+type ParagraphSliceVariation = ParagraphSliceDefault;
+
+/**
+ * Paragraph Shared Slice
+ *
+ * - **API ID**: `paragraph`
+ * - **Description**: Paragraph
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ParagraphSlice = prismic.SharedSlice<
+  "paragraph",
+  ParagraphSliceVariation
+>;
 
 /**
  * Primary content in *Title → Default → Primary*
@@ -614,6 +718,7 @@ declare module "@prismicio/client" {
       MentionsDocumentDataSlicesSlice,
       OfferDocument,
       OfferDocumentData,
+      OfferDocumentDataTagsItem,
       OfferDocumentDataSlicesSlice,
       OffersDocument,
       OffersDocumentData,
@@ -625,6 +730,10 @@ declare module "@prismicio/client" {
       TagDocumentData,
       TagDocumentDataSlicesSlice,
       AllDocumentTypes,
+      ParagraphSlice,
+      ParagraphSliceDefaultPrimary,
+      ParagraphSliceVariation,
+      ParagraphSliceDefault,
       TitleSlice,
       TitleSliceDefaultPrimary,
       TitleSliceVariation,

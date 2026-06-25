@@ -1,0 +1,25 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "cold",
+				"type": "Text"
+			},
+			"content": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Non nulla ad voluptate adipisicing fugiat qui ex veniam id laborum proident proident quis duis. Anim ea ea aliqua consequat aliquip fugiat quis nulla mollit aute amet sint."
+						}
+					}
+				]
+			}
+		},
+		"items": []
+	}
+]
