@@ -152,7 +152,7 @@ interface HomeDocumentData {
 export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
-type MentionsDocumentDataSlicesSlice = ParagraphSlice | TitleSlice;
+type MentionsDocumentDataSlicesSlice = TitleSlice | ParagraphSlice;
 
 /**
  * Content for Mentions documents
@@ -222,7 +222,7 @@ interface MentionsDocumentData {
  * @typeParam Lang - Language API ID of the document.
  */
 export type MentionsDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
+  prismic.PrismicDocumentWithoutUID<
     Simplify<MentionsDocumentData>,
     "mentions",
     Lang
@@ -425,12 +425,23 @@ export type OffersDocument<Lang extends string = string> =
     Lang
   >;
 
-type ProfilDocumentDataSlicesSlice = ParagraphSlice | TitleSlice;
+type ProfilDocumentDataSlicesSlice = never;
 
 /**
  * Content for Profil documents
  */
 interface ProfilDocumentData {
+  /**
+   * Title field in *Profil*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: profil.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
   /**
    * Slice Zone field in *Profil*
    *

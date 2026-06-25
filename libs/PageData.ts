@@ -1,5 +1,5 @@
 import { createClient } from "@/prismicio";
-import type { HomeDocument, MentionsDocument, OffersDocument, OfferDocument, TagDocument } from "@/prismicio-types";
+import type { HomeDocument, MentionsDocument, OffersDocument, OfferDocument, TagDocument, ProfilDocument } from "@/prismicio-types";
 
 type PageIdMap = {
   home: HomeDocument;
@@ -7,6 +7,7 @@ type PageIdMap = {
   offers: OffersDocument;
   offer: OfferDocument;
   tag: TagDocument;
+  profil: ProfilDocument;
 };
 
 type QueryOptions = { fetchLinks?: string[] };

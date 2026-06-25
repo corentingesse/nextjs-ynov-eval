@@ -18,9 +18,11 @@ export default function Header() {
         </ul>
       </nav>
 
-      <span className="material-symbols-outlined text-white text-3xl cursor-pointer">
-        account_circle
-      </span>
+      <Link href="/profil">
+        <span className="material-symbols-outlined text-white text-3xl cursor-pointer">
+          account_circle
+        </span>
+      </Link>
     </header>
   );
 }

@@ -6,18 +6,18 @@
   "status": true,
   "json": {
     "Main": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
-          "choices": {
-            "paragraph": {
-              "type": "SharedSlice"
-            },
-            "title": {
-              "type": "SharedSlice"
-            }
-          }
+          "choices": {}
         }
       }
     },
