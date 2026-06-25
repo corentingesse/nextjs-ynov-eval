@@ -1,13 +1,15 @@
 import { getPageDataByUid, getPagesByType } from "@/libs/PageData";
-import Title from "@/composants/ui/Title";
+import TitleComponent from "@/composants/ui/Title";
 import Link from "next/link";
+import { SliceZone } from "@prismicio/react";
 import ApplyForm from "@/composants/form/applyForm";
-import { PrismicRichText } from "@prismicio/react";
 import { asImageSrc, isFilled } from "@prismicio/client";
 import type * as prismic from "@prismicio/client";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import ListTags from "@/composants/ui/offers/ListTags";
+import Title from "@/slices/Title";
+import Paragraph from "@/slices/Paragraph";
 
 type FilledTagRelationship = prismic.FilledContentRelationshipField<"tag", string, { title: prismic.KeyTextField }>;
 
@@ -69,9 +71,9 @@ export default async function OfferPage({ params }: Props) {
                   Voir toutes les offres
                 </Link>
               </div>
-              <Title tag="h1">
+              <TitleComponent tag="h1">
                 {offer.data.title}
-              </Title>
+              </TitleComponent>
               {dateOffer && (
                   <div className="flex items-center gap-1.5 text-blue-500 text-sm mb-2">
                       <span className="material-symbols-outlined">calendar_today</span>
@@ -81,8 +83,14 @@ export default async function OfferPage({ params }: Props) {
               {tags.length > 0 && (
                 <ListTags tags={tags} />
               )}
-              <div className="w-full mt-8">
-                <PrismicRichText field={offer.data.content} />
+              <div className="my-5">
+                <SliceZone
+                  slices={offer.data.slices}
+                  components={{
+                    title: Title,
+                    paragraph: Paragraph
+                  }}
+                />
               </div>
               <div className="w-full mt-8">
                 <ApplyForm />

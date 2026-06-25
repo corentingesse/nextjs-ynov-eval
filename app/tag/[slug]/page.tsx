@@ -1,10 +1,13 @@
 import { getPageDataByUid, getPagesByType } from "@/libs/PageData";
 import Link from "next/link";
+import { SliceZone } from "@prismicio/react";
 import { isFilled } from "@prismicio/client";
 import { redirect } from "next/navigation";
-import Title from "@/composants/ui/Title";
+import TitleComponent from "@/composants/ui/Title";
 import ListOffers from "@/composants/ui/offers/ListOffers";
 import type { Metadata } from "next";
+import Title from "@/slices/Title";
+import Paragraph from "@/slices/Paragraph";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -50,15 +53,24 @@ export default async function TagPage({ params }: Props) {
               Voir toutes les offres
             </Link>
           </div>
-          <Title tag="h1" rightPart={
+          <TitleComponent tag="h1" rightPart={
             <div className="text-blue-light flex items-center gap-2">
               <span className="material-symbols-outlined">work</span>
               <span className="text-sm font-bold">{offers.length} offre{offers.length !== 1 ? 's' : ''}</span>
             </div>
           }>
             {tag.data.title}
-          </Title>
+          </TitleComponent>
           <ListOffers offers={offers} />
+          <div className="my-8">
+            <SliceZone
+                slices={tag?.data.slices}
+                components={{
+                title: Title,
+                paragraph: Paragraph
+            }}
+            />
+          </div>
         </div>
       </main>
     </div>

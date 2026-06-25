@@ -1,9 +1,12 @@
 import BannerImage from "@/composants/ui/BannerImage";
 import LatestOffers from "@/composants/ui/offers/LatestOffers";
-import Title from "@/composants/ui/Title";
+import { SliceZone } from "@prismicio/react";
+import TitleComponent from "@/composants/ui/Title";
 import { getPageSingleData, getPagesByType } from "@/libs/PageData";
 import { asImageSrc } from "@prismicio/client";
 import type { Metadata } from "next";
+import Title from "@/slices/Title";
+import Paragraph from "@/slices/Paragraph";
 
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await getPageSingleData("home");
@@ -27,10 +30,19 @@ export default async function Home() {
         <BannerImage link={asImageSrc(pageData?.data.image_heading)} />
 
         <div className="mx-10 md:mx-40 my-10 flex flex-col items-center justify-center gap-4 p-4 sm:items-start">
-          <Title tag="h1">
+          <TitleComponent tag="h1">
             {pageData?.data.title}
-          </Title>
+          </TitleComponent>
           <LatestOffers offers={offers} />
+          <div className="my-8">
+            <SliceZone
+              slices={pageData?.data.slices}
+              components={{
+              title: Title,
+              paragraph: Paragraph
+            }}
+          />
+          </div>
         </div>
       </main>
     </div>

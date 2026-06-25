@@ -284,17 +284,6 @@ interface OfferDocumentData {
   short_description: prismic.KeyTextField;
 
   /**
-   * content field in *Offer*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: offer.content
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  content: prismic.RichTextField;
-
-  /**
    * Tags field in *Offer*
    *
    * - **Field Type**: Group

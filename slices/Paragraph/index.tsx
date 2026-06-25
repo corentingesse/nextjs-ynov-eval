@@ -1,28 +1,24 @@
 import { FC } from "react";
 import { Content } from "@prismicio/client";
-import { SliceComponentProps } from "@prismicio/react";
+import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 
-/**
- * Props for `Paragraph`.
- */
 export type ParagraphProps = SliceComponentProps<Content.ParagraphSlice>;
 
-/**
- * Component for "Paragraph" Slices.
- */
 const Paragraph: FC<ParagraphProps> = ({ slice }) => {
   return (
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
+      className="py-8"
     >
-      Placeholder component for paragraph (variation: {slice.variation}) slices.
-      <br />
-      <strong>You can edit this slice directly in your code editor.</strong>
-      {/**
-       * 💡 Use your own AI agent with the Prismic CLI
-       * 📚 Docs: https://prismic.io/docs/ai#create-slices
-       */}
+      {slice.primary.title && (
+        <h2 className="text-blue-light text-2xl font-semibold mb-6">
+          {slice.primary.title}
+        </h2>
+      )}
+      <div className="flex flex-col gap-4 text-blue-dark">
+        <PrismicRichText field={slice.primary.content} />
+      </div>
     </section>
   );
 };
