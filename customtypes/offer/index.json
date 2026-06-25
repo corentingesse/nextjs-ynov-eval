@@ -58,6 +58,22 @@
           }
         }
       },
+      "emails": {
+        "type": "Group",
+        "config": {
+          "label": "Emails administrateurs",
+          "repeat": true,
+          "fields": {
+            "email": {
+              "type": "Text",
+              "config": {
+                "label": "Email",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",

@@ -3,24 +3,15 @@
 import applyFormAction from "@/actions/apply";
 import { OfferDocument } from "@/prismicio-types";
 import { useSavedOffersStore } from "@/store/savedOffersStore";
-import { useRef, useTransition } from "react";
 
-export default function ContactForm({ offer }: { offer: OfferDocument }) {
-  const [isPending, startTransition] = useTransition();
+export default function ApplyForm({ offer }: { offer: OfferDocument }) {
   const addApplied = useSavedOffersStore((s) => s.addApplied);
   const appliedOffers = useSavedOffersStore((s) => s.appliedOffers);
-  const formRef = useRef<HTMLFormElement>(null);
   const alreadyApplied = appliedOffers.some((o) => o.uid === offer.uid);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    startTransition(async () => {
-      await applyFormAction(formData);
-      addApplied(offer);
-      formRef.current?.reset();
-    });
-  };
+  const adminEmails = (offer.data.emails ?? [])
+    .map((item) => item.email)
+    .filter(Boolean) as string[];
 
   if (alreadyApplied) {
     return (
@@ -31,8 +22,26 @@ export default function ContactForm({ offer }: { offer: OfferDocument }) {
     );
   }
 
+  if (adminEmails.length === 0) {
+    return (
+      <p className="text-sm text-gray-400 italic">
+        Cette offre ne dispose pas encore d&apos;adresse de contact.
+      </p>
+    );
+  }
+
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="w-full items-end flex flex-col gap-4">
+    <form
+      action={async (formData) => {
+        await applyFormAction(formData);
+        addApplied(offer);
+      }}
+      className="w-full items-end flex flex-col gap-4"
+    >
+      <input type="hidden" name="offerTitle" value={offer.data.title ?? ""} />
+      {adminEmails.map((email) => (
+        <input key={email} type="hidden" name="adminEmail" value={email} />
+      ))}
       <textarea
         className="w-full bg-white h-32 p-2 placeholder:text-blue-light border border-blue-light rounded"
         name="message"
@@ -41,10 +50,9 @@ export default function ContactForm({ offer }: { offer: OfferDocument }) {
       />
       <button
         type="submit"
-        disabled={isPending}
-        className="w-fit bg-blue-light text-white px-4 py-2 rounded hover:bg-blue-dark transition-colors mt-4 disabled:opacity-50"
+        className="w-fit bg-blue-light text-white px-4 py-2 rounded hover:bg-blue-dark transition-colors mt-4"
       >
-        {isPending ? "Envoi..." : "Envoyer"}
+        Envoyer
       </button>
     </form>
   );

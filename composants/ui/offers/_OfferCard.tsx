@@ -28,14 +28,13 @@ export default function OfferCard({ offer }: { offer: OfferDocument }) {
 
     return (
         <div className="relative bg-white border border-gray-200 p-5 hover:shadow-sm transition-shadow">
-            <Link
-                href={`/offers/${offer.uid}`}
-                className="absolute inset-0 z-10"
-                aria-label={`Voir l'offre ${offer.data.title}`}
-            />
-
             <div className="flex items-start justify-between mb-3">
-                <h3 className="text-base font-bold text-gray-900">{offer.data.title}</h3>
+                <Link
+                    href={`/offers/${offer.uid}`}
+                    aria-label={`Voir l'offre ${offer.data.title}`}
+                    >
+                    <h3 className="text-base font-bold text-gray-900 hover:underline">{offer.data.title}</h3>
+                </Link>
                 <button
                     onClick={(e) => {
                         e.preventDefault();

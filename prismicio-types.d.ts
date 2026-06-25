@@ -243,6 +243,21 @@ export interface OfferDocumentDataTagsItem {
   tag: ContentRelationshipFieldWithData<[{ id: "tag"; fields: ["title"] }]>;
 }
 
+/**
+ * Item in *Offer → Emails administrateurs*
+ */
+export interface OfferDocumentDataEmailsItem {
+  /**
+   * Email field in *Offer → Emails administrateurs*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.emails[].email
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  email: prismic.KeyTextField;
+}
+
 type OfferDocumentDataSlicesSlice = ParagraphSlice | TitleSlice;
 
 /**
@@ -293,6 +308,17 @@ interface OfferDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
   tags: prismic.GroupField<Simplify<OfferDocumentDataTagsItem>>;
+
+  /**
+   * Emails administrateurs field in *Offer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.emails[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  emails: prismic.GroupField<Simplify<OfferDocumentDataEmailsItem>>;
 
   /**
    * Slice Zone field in *Offer*
@@ -719,6 +745,7 @@ declare module "@prismicio/client" {
       OfferDocument,
       OfferDocumentData,
       OfferDocumentDataTagsItem,
+      OfferDocumentDataEmailsItem,
       OfferDocumentDataSlicesSlice,
       OffersDocument,
       OffersDocumentData,
