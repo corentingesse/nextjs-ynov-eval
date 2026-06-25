@@ -1,0 +1,41 @@
+{
+  "id": "title",
+  "type": "SharedSlice",
+  "name": "Title",
+  "description": "Title",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "tag": {
+          "type": "Select",
+          "config": {
+            "label": "Tag",
+            "placeholder": "",
+            "options": [
+              "h2",
+              "h3",
+              "h4",
+              "h5",
+              "h6"
+            ],
+            "default_value": "h2"
+          }
+        },
+        "text": {
+          "type": "Text",
+          "config": {
+            "label": "Text",
+            "placeholder": ""
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

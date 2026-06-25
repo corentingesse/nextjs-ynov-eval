@@ -6,6 +6,13 @@
   "status": true,
   "json": {
     "Main": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
       "image_heading": {
         "type": "Image",
         "config": {
@@ -18,7 +25,11 @@
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
-          "choices": {}
+          "choices": {
+            "title": {
+              "type": "SharedSlice"
+            }
+          }
         }
       }
     },

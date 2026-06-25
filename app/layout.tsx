@@ -5,17 +5,18 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 
 const inter = Inter({
-  weight: ["400", "700"],
+  weight: ["500"],
   subsets: ["latin"],
   variable: "--font-inter",
 });
 
+
 export const metadata: Metadata = {
   title: {
-    default: "Next Formation",
-    template: "%s | Next Formation",
+    default: "offres d'emploi",
+    template: "%s | offres d'emploi",
   },
-  description: "Découvrez et partagez vos avis sur les sites web",
+  description: "Découvrez les dernières offres d'emploi et trouvez votre prochaine opportunité professionnelle. Explorez notre sélection d'annonces et postulez dès aujourd'hui.",
 };
 
 export default function RootLayout({

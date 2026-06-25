@@ -1,0 +1,19 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"tag": {
+				"__TYPE__": "FieldContent",
+				"value": "h2",
+				"type": "Select"
+			},
+			"text": {
+				"__TYPE__": "FieldContent",
+				"value": "harder",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]

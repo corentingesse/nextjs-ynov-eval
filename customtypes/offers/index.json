@@ -1,14 +1,28 @@
 {
   "format": "page",
   "id": "offers",
+  "label": "Offers",
+  "repeatable": false,
+  "status": true,
   "json": {
     "Main": {
-      "slices": {
+      "title": {
+        "type": "Text",
         "config": {
-          "choices": {}
-        },
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
+      "slices": {
+        "type": "Slices",
         "fieldset": "Slice Zone",
-        "type": "Slices"
+        "config": {
+          "choices": {
+            "title": {
+              "type": "SharedSlice"
+            }
+          }
+        }
       }
     },
     "SEO & Metadata": {
@@ -38,8 +52,5 @@
         "type": "Image"
       }
     }
-  },
-  "label": "Offers",
-  "repeatable": false,
-  "status": true
+  }
 }

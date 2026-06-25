@@ -1,6 +1,9 @@
 {
   "format": "page",
   "id": "tag",
+  "label": "Tag",
+  "repeatable": true,
+  "status": true,
   "json": {
     "Main": {
       "uid": {
@@ -9,12 +12,23 @@
           "label": "UID"
         }
       },
-      "slices": {
+      "title": {
+        "type": "Text",
         "config": {
-          "choices": {}
-        },
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
+      "slices": {
+        "type": "Slices",
         "fieldset": "Slice Zone",
-        "type": "Slices"
+        "config": {
+          "choices": {
+            "title": {
+              "type": "SharedSlice"
+            }
+          }
+        }
       }
     },
     "SEO & Metadata": {
@@ -44,8 +58,5 @@
         "type": "Image"
       }
     }
-  },
-  "label": "Tag",
-  "repeatable": true,
-  "status": true
+  }
 }

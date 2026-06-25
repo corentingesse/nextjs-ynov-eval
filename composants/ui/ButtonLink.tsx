@@ -15,7 +15,7 @@ const buttonClasses = {
     link: "text-dark",
   },
   light: {
-    filled: "bg-white text-dark rounded-lg",
+    filled: "bg-medium text-dark rounded-lg",
     outline: "border border-medium-light text-white! rounded-lg ",
     link: "text-light",
   },

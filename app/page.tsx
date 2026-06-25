@@ -1,12 +1,12 @@
 import BannerImage from "@/composants/ui/BannerImage";
-import { getPageSingleData } from "@/libs/PageData";
+import ListOffers from "@/composants/ui/offers/ListOffers";
+import Title from "@/composants/ui/Title";
+import { getPageSingleData, getPagesByType } from "@/libs/PageData";
 import { asImageSrc } from "@prismicio/client";
 import type { Metadata } from "next";
 
-const pageData = await getPageSingleData("home");
-console.log(pageData);
-
 export async function generateMetadata(): Promise<Metadata> {
+  const pageData = await getPageSingleData("home");
   return {
     title: pageData?.data.meta_title,
     description: pageData?.data.meta_description,
@@ -17,11 +17,21 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function Home() {
+export default async function Home() {
+  const pageData = await getPageSingleData("home");
+  const offers = await getPagesByType("offer");
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div className="flex flex-col flex-1 items-center justify-center bg-medium font-sans dark:bg-black">
+      <main className="w-full bg-medium dark:bg-black">
         <BannerImage link={asImageSrc(pageData?.data.image_heading)} />
+
+        <div className="mx-10 md:mx-40 my-10 flex flex-col items-center justify-center gap-4 p-4 sm:items-start">
+          <Title tag="h1">
+            {pageData?.data.title}
+          </Title>
+          <ListOffers offers={offers} />
+        </div>
       </main>
     </div>
   );

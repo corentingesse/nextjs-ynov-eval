@@ -1,18 +1,12 @@
-"use client";
+import { OfferDocument } from "@/prismicio-types";
+import OfferCard from "./OfferCard";
 
-import Link from "next/link";
-
-export default function ListOffers() {
+export default async function ListOffers({ offers }: { offers: OfferDocument[] }) {
     return (
-        <Link href="/offers/1" className="block">
-            <div className="bg-white rounded-lg shadow-md p-4">
-                <h3 className="text-lg font-bold mb-2">Offer Title</h3>
-                <span className="text-gray-500 text-sm mb-2">Date</span>
-                <Link href="/offers/1" className="text-blue-500 hover:underline">
-                    View Details
-                </Link>
-                <p className="text-gray-600">Offer description goes here.</p>
-            </div>
-        </Link>
+        <div className="w-full my-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {offers.map((offer) => (
+                <OfferCard key={offer.uid} offer={offer} />
+            ))}
+        </div>
     );
 }

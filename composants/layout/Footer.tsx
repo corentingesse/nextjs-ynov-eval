@@ -6,7 +6,7 @@ import { isFilled } from "@prismicio/client";
 export default async function Footer() {
   const client = createClient();
   return (
-    <footer className="px-6 py-12">
+    <footer className="bg-blue-dark px-6 py-12">
       <Logo />
       <nav className="mt-8">
         <ul className="flex flex-col gap-2 text-button">

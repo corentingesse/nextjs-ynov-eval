@@ -69,12 +69,23 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type HomeDocumentDataSlicesSlice = never;
+type HomeDocumentDataSlicesSlice = TitleSlice;
 
 /**
  * Content for Home documents
  */
 interface HomeDocumentData {
+  /**
+   * Title field in *Home*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: home.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
   /**
    * Image Heading field in *Home*
    *
@@ -141,12 +152,23 @@ interface HomeDocumentData {
 export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
-type MentionsDocumentDataSlicesSlice = never;
+type MentionsDocumentDataSlicesSlice = TitleSlice;
 
 /**
  * Content for Mentions documents
  */
 interface MentionsDocumentData {
+  /**
+   * Title field in *Mentions*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mentions.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
   /**
    * Slice Zone field in *Mentions*
    *
@@ -206,12 +228,34 @@ export type MentionsDocument<Lang extends string = string> =
     Lang
   >;
 
-type OfferDocumentDataSlicesSlice = never;
+type OfferDocumentDataSlicesSlice = TitleSlice;
 
 /**
  * Content for Offer documents
  */
 interface OfferDocumentData {
+  /**
+   * Title field in *Offer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Short description field in *Offer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.short_description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  short_description: prismic.KeyTextField;
+
   /**
    * Slice Zone field in *Offer*
    *
@@ -267,12 +311,23 @@ interface OfferDocumentData {
 export type OfferDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<OfferDocumentData>, "offer", Lang>;
 
-type OffersDocumentDataSlicesSlice = never;
+type OffersDocumentDataSlicesSlice = TitleSlice;
 
 /**
  * Content for Offers documents
  */
 interface OffersDocumentData {
+  /**
+   * Title field in *Offers*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offers.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
   /**
    * Slice Zone field in *Offers*
    *
@@ -332,7 +387,7 @@ export type OffersDocument<Lang extends string = string> =
     Lang
   >;
 
-type ProfilDocumentDataSlicesSlice = never;
+type ProfilDocumentDataSlicesSlice = TitleSlice;
 
 /**
  * Content for Profil documents
@@ -397,12 +452,23 @@ export type ProfilDocument<Lang extends string = string> =
     Lang
   >;
 
-type TagDocumentDataSlicesSlice = never;
+type TagDocumentDataSlicesSlice = TitleSlice;
 
 /**
  * Content for Tag documents
  */
 interface TagDocumentData {
+  /**
+   * Title field in *Tag*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tag.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
   /**
    * Slice Zone field in *Tag*
    *
@@ -466,6 +532,59 @@ export type AllDocumentTypes =
   | ProfilDocument
   | TagDocument;
 
+/**
+ * Primary content in *Title → Default → Primary*
+ */
+export interface TitleSliceDefaultPrimary {
+  /**
+   * Tag field in *Title → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: h2
+   * - **API ID Path**: title.default.primary.tag
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  tag: prismic.SelectField<"h2" | "h3" | "h4" | "h5" | "h6", "filled">;
+
+  /**
+   * Text field in *Title → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: title.default.primary.text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  text: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for Title Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TitleSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<TitleSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Title*
+ */
+type TitleSliceVariation = TitleSliceDefault;
+
+/**
+ * Title Shared Slice
+ *
+ * - **API ID**: `title`
+ * - **Description**: Title
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TitleSlice = prismic.SharedSlice<"title", TitleSliceVariation>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -506,6 +625,10 @@ declare module "@prismicio/client" {
       TagDocumentData,
       TagDocumentDataSlicesSlice,
       AllDocumentTypes,
+      TitleSlice,
+      TitleSliceDefaultPrimary,
+      TitleSliceVariation,
+      TitleSliceDefault,
     };
   }
 }

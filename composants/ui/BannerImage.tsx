@@ -9,12 +9,14 @@ export default function BannerImage({
 }) {
   if (!link) return null;
   return (
-    <div className="relative h-64 md:h-96">
+    <div className="relative w-full">
         <Image
           src={link}
           alt="Banner"
-          fill
-          className="object-cover"
+          width={1920}
+          height={1080}
+          className="object-cover w-full h-44 md:h-84"
+          loading="eager"
         />
       </div>
     );

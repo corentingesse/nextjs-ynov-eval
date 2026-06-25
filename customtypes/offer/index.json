@@ -1,6 +1,9 @@
 {
   "format": "page",
   "id": "offer",
+  "label": "Offer",
+  "repeatable": true,
+  "status": true,
   "json": {
     "Main": {
       "uid": {
@@ -9,12 +12,30 @@
           "label": "UID"
         }
       },
-      "slices": {
+      "title": {
+        "type": "Text",
         "config": {
-          "choices": {}
-        },
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
+      "short_description": {
+        "type": "Text",
+        "config": {
+          "label": "Short description",
+          "placeholder": ""
+        }
+      },
+      "slices": {
+        "type": "Slices",
         "fieldset": "Slice Zone",
-        "type": "Slices"
+        "config": {
+          "choices": {
+            "title": {
+              "type": "SharedSlice"
+            }
+          }
+        }
       }
     },
     "SEO & Metadata": {
@@ -44,8 +65,5 @@
         "type": "Image"
       }
     }
-  },
-  "label": "Offer",
-  "repeatable": true,
-  "status": true
+  }
 }
